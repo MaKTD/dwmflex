@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. sb-theme
+layout=`xkblayout-state print "%s"`
+
+display "${layout}"

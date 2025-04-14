@@ -1,0 +1,35 @@
+#!/usr/bin/env sh
+#
+# Saumon i3blocks scripts
+# temperature (hardware temperature)
+#
+
+if ! command -v sensors >/dev/null; then
+  TEMP="?"
+else
+  TEMP=$(sensors -u | grep -m1 temp1_input | awk '{printf ("%d",$2)}')
+fi
+
+
+#if [ "$TEMP" == "?" ]; then
+#elif [ "$TEMP" -ge 80 ]; then
+#  ICON="🔥"
+#elif [ "$TEMP" -ge 60 ]; then
+#  ICON="🌡️"
+#else
+#  ICON="🧊"
+#fi
+
+if [ "$TEMP" = "?" ]; then
+  ICON="🌡️"
+elif [ "$TEMP" -ge 75 ]; then
+  ICON="🔥"
+elif [ "$TEMP" -ge 55 ]; then
+  ICON="🌡️"
+else
+  ICON="🧊"
+fi
+
+. sb-theme
+display "$ICON $TEMP °C"
+

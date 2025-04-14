@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+# Copyright (C) 2014 Julien Bonjean <julien@bonjean.info>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# TYPE="${BLOCK_INSTANCE:-mem}"
+# PERCENT="${PERCENT:-true}"
+
+
+#!/bin/sh
+
+ICON="💾"
+
+# case $BLOCK_BUTTON in
+#	1) notify-send "🧠 Memory hogs" "$(ps axch -o cmd,%mem | awk '{cmd[$1]+=$2} END {for (i in cmd) print i, cmd[i]}' | sort -nrk2 | head)" ;;
+#	2) setsid -f "$TERMINAL" -e htop ;;
+#	3) notify-send "🧠 Memory module" "\- Shows Memory Used/Total.
+#- Click to show memory hogs.
+#- Middle click to open htop." ;;
+#	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+#esac
+
+
+
+
+
+
+USED=$(free --mebi | sed -n '2{p;q}' | awk '{printf ("%2.1fG", ( $3 / 1024))}')
+USED_PR=$(free | tail -2 | head -1 | awk '{ print int($3 / $2 * 100) }')
+
+out=`printf "%s %s (%s%%)" $ICON $USED $USED_PR`
+
+. sb-theme
+display "${out}"

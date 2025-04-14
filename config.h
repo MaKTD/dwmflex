@@ -5,9 +5,9 @@
 static const unsigned int borderpx       = 0;   /* border pixel of windows */
 static const int corner_radius           = 10;
 #else
-static const unsigned int borderpx       = 2;   /* border pixel of windows */
+static const unsigned int borderpx       = 1;   /* border pixel of windows */
 #endif // ROUNDED_CORNERS_PATCH
-static const unsigned int snap           = 16;  /* snap pixel */
+static const unsigned int snap           = 32;  /* snap pixel */
 #if SWALLOW_PATCH
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 #endif // SWALLOW_PATCH
@@ -130,7 +130,7 @@ static void (*bartabmonfns[])(Monitor *) = { NULL /* , customlayoutfn */ };
 #if BAR_PANGO_PATCH
 static const char font[]                 = "monospace 10";
 #else
-static const char *fonts[]               = { "monospace:pixelsize=16" };
+static const char *fonts[]          = { "Noto Sans:size=13:style=Medium", "JetBrainsMono Nerd Font:size=13", "Noto Emoji:size=13" };
 #endif // BAR_PANGO_PATCH
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -415,22 +415,22 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 #if COOL_AUTOSTART_PATCH
 static const char *const autostart[] = {
-	"st", NULL,
+	"picom", "-b", NULL,
+	"nitrogen", "--restore", NULL,
 	NULL /* terminate */
 };
 #endif // COOL_AUTOSTART_PATCH
 
-#define NOTES_VAULT "personal"
 #if RENAMED_SCRATCHPADS_PATCH
-static const char *spterm[] = {"~", "terminal", "-n", "spterm", "-g", "80x23", NULL};
-static const char *spnotes[] = {"n", "xdg-open", "obsidian://open?vault=" NOTES_VAULT, NULL};
-static const char *spmisc[] = {".", NULL};
+//static const char *spterm[] = {"~", "terminal", "-n", "spterm", "-g", "80x23", NULL};
+//static const char *spnotes[] = {"n", "xdg-open", "obsidian://open?vault=" NOTES_VAULT, NULL};
+//static const char *spmisc[] = {".", NULL};
 #elif SCRATCHPADS_PATCH
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-static Sp scratchpads[] = {
-   /* name          cmd  */
-   {"spterm",      spcmd1},
-};
+//const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+//static Sp scratchpads[] = {
+//   /* name          cmd  */
+//   {"spterm",      spcmd1},
+//};
 #endif // SCRATCHPADS_PATCH
 
 /* Tags
@@ -517,33 +517,35 @@ static const Rule rules[] = {
 	#if SWALLOW_PATCH
 	RULE(.class = "St", .isterminal = 1)
 	RULE(.class = "Alacritty", .isterminal = 1)
-	RULE(.title = "Event Tester", .noswallow = 1)
-	RULE(.title = "NoiseTorch", .isfloating = 1, .iscentered = 1, .noswallow = 1)
-	RULE(.class = "Dragon", .isfloating = 1, .iscentered = 1, .noswallow = 1)
-	RULE(.class = "ClipGrab", .isfloating = 1, .iscentered = 1, .noswallow = 1)
-	RULE(.class = "Onboard", .isfloating = 1, .iscentered = 1, .noswallow = 1)
+	RULE(.class = "kitty", .isterminal = 1)
+	//RULE(.title = "Event Tester", .noswallow = 1)
+	//RULE(.title = "NoiseTorch", .isfloating = 1, .iscentered = 1, .noswallow = 1)
+	//RULE(.class = "Dragon", .isfloating = 1, .iscentered = 1, .noswallow = 1)
+	//RULE(.class = "ClipGrab", .isfloating = 1, .iscentered = 1, .noswallow = 1)
+	//RULE(.class = "Onboard", .isfloating = 1, .iscentered = 1, .noswallow = 1)
 	#endif // SWALLOW_PATCH
-	RULE(.class = "Safeeyes", .isfloating = 1, .iscentered = 1)
+	//RULE(.class = "Safeeyes", .isfloating = 1, .iscentered = 1)
 	#if WINDOWROLERULE_PATCH
-	RULE(.class = "Brave-browser", .role = "browser", .tags = TAG(1))
+	//RULE(.class = "Brave-browser", .role = "browser", .tags = TAG(1))
+	//RULE(.class = "Thorium-browser", .role = "browser", .tags = TAG(1))
 	#else
-	RULE(.class = "Brave-browser", .tags = TAG(1))
+	//RULE(.class = "Brave-browser", .tags = TAG(1))
 	#endif
-	RULE(.class = "Code", .tags = TAG(2))
-	RULE(.class = "Spotify", .tags = TAG(8))
-	RULE(.class = "vesktop", .tags = TAG(9))
-	RULE(.title = "wlroots - X11-1", .tags = TAG(2))
+	//RULE(.class = "Code", .tags = TAG(2))
+	//RULE(.class = "Spotify", .tags = TAG(8))
+	//RULE(.class = "vesktop", .tags = TAG(9))
+	//RULE(.title = "wlroots - X11-1", .tags = TAG(2))
 
 	// There's no way to distinguish between torrent download pop-ups and the
 	// main window, so do negative pattern matching.
-	RULE(.class = "qBittorrent", .isfloating = 1, .iscentered = 1)
-	RULE(.class = "qBittorrent", .title = "qBittorrent v", .tags = TAG(7))
+	//RULE(.class = "qBittorrent", .isfloating = 1, .iscentered = 1)
+	//RULE(.class = "qBittorrent", .title = "qBittorrent v", .tags = TAG(7))
 
 	#if RENAMED_SCRATCHPADS_PATCH
-	RULE(.instance = "spterm", .scratchkey = '~', .isfloating = 1, .iscentered = 1)
-	RULE(.class = "obsidian", .scratchkey = 'n')
+	//RULE(.instance = "spterm", .scratchkey = '~', .isfloating = 1, .iscentered = 1)
+	//RULE(.class = "obsidian", .scratchkey = 'n')
 	#elif SCRATCHPADS_PATCH
-	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .iscentered = 1)
+	//RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .iscentered = 1)
 	#endif // SCRATCHPADS_PATCH
 };
 
@@ -813,7 +815,7 @@ static const char *xkb_layouts[]  = {
 #endif // XKB_PATCH
 
 /* key definitions */
-#define MODKEY Mod4Mask
+#define MODKEY Mod1Mask
 #if COMBO_PATCH && SWAPTAGS_PATCH && TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
@@ -900,17 +902,8 @@ static const char *xkb_layouts[]  = {
 #if !NODMENU_PATCH
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 #endif // NODMENU_PATCH
-static const char *dmenucmd[] = {
-	"menu-run",
-	#if !NODMENU_PATCH
-	"-m", dmenumon,
-	#endif // NODMENU_PATCH
-	#if BAR_DMENUMATCHTOP_PATCH
-	topbar ? NULL : "-b",
-	#endif // BAR_DMENUMATCHTOP_PATCH
-	NULL
-};
-static const char *termcmd[]  = { "terminal", NULL };
+static const char *launchercmd[] ={ "rofi", "-show", NULL };
+static const char *termcmd[]  = { "kitty", NULL };
 
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
@@ -929,24 +922,51 @@ static const char *statuscmd[] = { "/bin/sh", "-c", NULL, NULL };
 #endif // BAR_STATUSCMD_PATCH
 
 #if ON_EMPTY_KEYS_PATCH
-static const char* firefoxcmd[] = {"firefox", NULL};
-static Key on_empty_keys[] = {
-	/* modifier key            function                argument */
-	{ 0,        XK_f,          spawn,                  {.v = firefoxcmd } },
-};
+//static const char* firefoxcmd[] = {"firefox", NULL};
+//static Key on_empty_keys[] = {
+//	/* modifier key            function                argument */
+//	{ 0,        XK_f,          spawn,                  {.v = firefoxcmd } },
+//};
 #endif // ON_EMPTY_KEYS_PATCH
 
 #include <X11/XF86keysym.h>
 static Key keys[] = {
 	/* modifier                     key            function                argument */
+	{ MODKEY,                       XK_r,          spawn,                  {.v = launchercmd } },
+	{ MODKEY,                       XK_t,          spawn,                  {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_b,          togglebar,              {0} },
+	{ MODKEY,                       XK_q,          killclient,             {0} },
+	{ MODKEY|ShiftMask,             XK_q,          quit,                   {0} },
+
+	{ MODKEY,                       XK_j,          focusstack,             {.i = +1 } },
+	{ MODKEY,                       XK_k,          focusstack,             {.i = -1 } },
+	
+	{ MODKEY,                       XK_i,          incnmaster,             {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_i,          incnmaster,             {.i = -1 } },
+	
+	#if MOVESTACK_PATCH
+        { MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,          movestack,              {.i = -1 } },
+	#endif // MOVESTACK_PATCH
+
+	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
+	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
+
+
+	{ MODKEY,                       XK_Return,      zoom,                   {0} },
+	//{ MODKEY,                       XK_space,      zoom,                   {0} },
+	{ MODKEY,                       XK_Tab,         view,                   {0} },
+	//{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[0]} },
+	//{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	//{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_space,  setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	
 	#if KEYMODES_PATCH
 	{ MODKEY,                       XK_Escape,     setkeymode,             {.ui = COMMANDMODE} },
 	#endif // KEYMODES_PATCH
-	{ MODKEY,                       XK_d,          spawn,                  {.v = dmenucmd } },
-	{ MODKEY | ShiftMask,           XK_d,          spawn,                  SHCMD("passmenu") },
-	{ MODKEY,                       XK_Return,     spawn,                  {.v = termcmd } },
+	//{ MODKEY | ShiftMask,           XK_d,          spawn,                  SHCMD("passmenu") },
 	#if RIODRAW_PATCH
-	{ MODKEY|ControlMask,           XK_p,          riospawnsync,           {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return,     riospawn,               {.v = termcmd } },
 	{ MODKEY,                       XK_s,          rioresize,              {0} },
 	#endif // RIODRAW_PATCH
@@ -990,14 +1010,10 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_j,          pushdown,               {0} },
 	{ MODKEY|ControlMask,           XK_k,          pushup,                 {0} },
 	#endif // PUSH_PATCH / PUSH_NO_MASTER_PATCH
-	{ MODKEY,                       XK_i,          incnmaster,             {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_i,          incnmaster,             {.i = -1 } },
 	#if FLEXTILE_DELUXE_LAYOUT
 	{ MODKEY|ControlMask,           XK_i,          incnstack,              {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_u,          incnstack,              {.i = -1 } },
 	#endif // FLEXTILE_DELUXE_LAYOUT
-	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
-	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
 	#if CFACTS_PATCH
 	{ MODKEY|ShiftMask,             XK_h,          setcfact,               {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_l,          setcfact,               {.f = +0.25} },
@@ -1017,10 +1033,6 @@ static Key keys[] = {
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_Right,      moveresize,             {.v = "0x 0y 25w 0h" } },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_Left,       moveresize,             {.v = "0x 0y -25w 0h" } },
 	#endif // MOVERESIZE_PATCH
-	#if MOVESTACK_PATCH
-	{ MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,          movestack,              {.i = -1 } },
-	#endif // MOVESTACK_PATCH
 	#if TRANSFER_PATCH
 	{ MODKEY,                       XK_x,          transfer,               {0} },
 	#endif // TRANSFER_PATCH
@@ -1036,7 +1048,6 @@ static Key keys[] = {
 	#if INSETS_PATCH
 	{ MODKEY|ShiftMask|ControlMask, XK_a,          updateinset,            {.v = &default_inset } },
 	#endif // INSETS_PATCH
-	{ MODKEY,                       XK_space,      zoom,                   {0} },
 	#if VANITYGAPS_PATCH
 	{ MODKEY,                       XK_g,          incrgaps,               {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_g,          incrgaps,               {.i = -1 } },
@@ -1055,7 +1066,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_a,          togglegaps,             {0} },
 	{ MODKEY|ShiftMask,             XK_a,          defaultgaps,            {0} },
 	#endif // VANITYGAPS_PATCH
-	{ MODKEY,                       XK_Tab,        view,                   {0} },
 	#if SHIFTTAG_PATCH
 	{ MODKEY|ShiftMask,             XK_Left,       shifttag,               { .i = -1 } }, // note keybinding conflict with focusadjacenttag tagtoleft
 	{ MODKEY|ShiftMask,             XK_Right,      shifttag,               { .i = +1 } }, // note keybinding conflict with focusadjacenttag tagtoright
@@ -1105,13 +1115,13 @@ static Key keys[] = {
 	#if XRDB_PATCH && !BAR_VTCOLORS_PATCH
 	{ MODKEY|ShiftMask,             XK_F5,         xrdb,                   {.v = NULL } },
 	#endif // XRDB_PATCH
-	{ MODKEY|Mod1Mask,              XK_0,          setlayout,              {0} },
-	{ MODKEY|Mod1Mask,              XK_1,          setlayout,              {.v = &layouts[0]} },
-	{ MODKEY|Mod1Mask,              XK_2,          setlayout,              {.v = &layouts[1]} },
-	{ MODKEY|Mod1Mask,              XK_3,          setlayout,              {.v = &layouts[2]} },
-	{ MODKEY|Mod1Mask,              XK_4,          setlayout,              {.v = &layouts[3]} },
-	{ MODKEY|Mod1Mask,              XK_5,          setlayout,              {.v = &layouts[4]} },
-	{ MODKEY|Mod1Mask,              XK_6,          setlayout,              {.v = &layouts[5]} },
+	{ MODKEY|ControlMask,              XK_0,          setlayout,              {0} },
+	{ MODKEY|ControlMask,              XK_1,          setlayout,              {.v = &layouts[0]} },
+	{ MODKEY|ControlMask,              XK_2,          setlayout,              {.v = &layouts[1]} },
+	{ MODKEY|ControlMask,              XK_3,          setlayout,              {.v = &layouts[2]} },
+	{ MODKEY|ControlMask,              XK_4,          setlayout,              {.v = &layouts[3]} },
+	{ MODKEY|ControlMask,              XK_5,          setlayout,              {.v = &layouts[4]} },
+	{ MODKEY|ControlMask,              XK_6,          setlayout,              {.v = &layouts[5]} },
 	#if FLEXTILE_DELUXE_LAYOUT
 	{ MODKEY|ControlMask,           XK_t,          rotatelayoutaxis,       {.i = +1 } },   /* flextile, 1 = layout axis */
 	{ MODKEY|ControlMask,           XK_Tab,        rotatelayoutaxis,       {.i = +2 } },   /* flextile, 2 = master axis */
@@ -1123,7 +1133,6 @@ static Key keys[] = {
 	{ MODKEY|Mod5Mask|Mod1Mask,     XK_Tab,        rotatelayoutaxis,       {.i = -4 } },   /* flextile, 4 = secondary stack axis */
 	{ MODKEY|ControlMask,           XK_Return,     mirrorlayout,           {0} },          /* flextile, flip master and stack areas */
 	#endif // FLEXTILE_DELUXE_LAYOUT
-	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
 	#if MAXIMIZE_PATCH
 	{ MODKEY|ControlMask|ShiftMask, XK_h,          togglehorizontalmax,    {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_l,          togglehorizontalmax,    {0} },
@@ -1135,11 +1144,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Escape,     togglenomodbuttons,     {0} },
 	#endif // NO_MOD_BUTTONS_PATCH
 	#if RENAMED_SCRATCHPADS_PATCH
-	{ MODKEY,                       XK_grave,      togglescratch,          {.v = spterm } },
-	{ MODKEY,                       XK_n,          togglescratch,          {.v = spnotes } },
-	{ MODKEY,                       XK_apostrophe, togglescratch,          {.v = spmisc } },
-	{ MODKEY|ControlMask,           XK_apostrophe, setscratch,             {.v = spmisc } },
-	{ MODKEY|ShiftMask,             XK_apostrophe, removescratch,          {.v = spmisc } },
+	//{ MODKEY,                       XK_grave,      togglescratch,          {.v = spterm } },
+	//{ MODKEY,                       XK_n,          togglescratch,          {.v = spnotes } },
+	//{ MODKEY,                       XK_apostrophe, togglescratch,          {.v = spmisc } },
+	//{ MODKEY|ControlMask,           XK_apostrophe, setscratch,             {.v = spmisc } },
+	//{ MODKEY|ShiftMask,             XK_apostrophe, removescratch,          {.v = spmisc } },
 	#elif SCRATCHPADS_PATCH
 	{ MODKEY,                       XK_grave,      togglescratch,          {.ui = 0 } },
 	{ MODKEY|ControlMask,           XK_grave,      setscratch,             {.ui = 0 } },
@@ -1411,8 +1420,6 @@ static Command commands[] = {
 	{ {ControlMask, 0,          0,         0},    {XK_w,      XK_less,  0,         0},            setmfact,        {.f = -0.05} },
 	{ {ControlMask, ShiftMask,  0,         0},    {XK_w,      XK_less,  0,         0},            setmfact,        {.f = +0.05} },
 	{ {ControlMask, ShiftMask,  0,         0},    {XK_w,      XK_0,     0,         0},            setmfact,        {.f = +1.50} },
-	{ {ShiftMask,   0,          0,         0},    {XK_period, XK_e,     0,         0},            spawn,           {.v = dmenucmd} },
-	{ {ShiftMask,   0,          0,         0},    {XK_period, XK_o,     0,         0},            spawn,           {.v = dmenucmd} },
 	{ {ShiftMask,   0,          0,         0},    {XK_period, XK_q,     XK_Return, 0},            quit,            {0} },
 	{ {ShiftMask,   0,          0,         0},    {XK_period, XK_b,     XK_d,      XK_Return},    killclient,      {0} },
 	{ {ShiftMask,   0,          0,         0},    {XK_period, XK_b,     XK_n,      XK_Return},    focusstack,      {.i = +1} },
@@ -1429,7 +1436,7 @@ static Command commands[] = {
 static Button buttons[] = {
 	/* click                event mask           button          function        argument */
 	#if BAR_STATUSBUTTON_PATCH
-	{ ClkButton,            0,                   Button1,        spawn,          {.v = dmenucmd } },
+	{ ClkButton,            0,                   Button1,        spawn,          {.v = launchercmd } },
 	#endif // BAR_STATUSBUTTON_PATCH
 	#if CYCLELAYOUTS_PATCH
 	{ ClkLtSymbol,          0,                   Button1,        cyclelayout,    { .i = -1 } },
