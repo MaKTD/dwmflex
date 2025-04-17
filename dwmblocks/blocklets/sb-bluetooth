@@ -25,5 +25,6 @@ fi
 . sb-theme
 
 out=`printf "%s" $icon`
+color=6
 
-display "${out}"
+display "${out}" $color

@@ -11,25 +11,21 @@ else
 fi
 
 
-#if [ "$TEMP" == "?" ]; then
-#elif [ "$TEMP" -ge 80 ]; then
-#  ICON="🔥"
-#elif [ "$TEMP" -ge 60 ]; then
-#  ICON="🌡️"
-#else
-#  ICON="🧊"
-#fi
 
 if [ "$TEMP" = "?" ]; then
   ICON="🌡️"
+  color=15
 elif [ "$TEMP" -ge 75 ]; then
   ICON="🔥"
+  color=11
 elif [ "$TEMP" -ge 55 ]; then
   ICON="🌡️"
+  color=12
 else
   ICON="🧊"
+  color=15
 fi
 
 . sb-theme
-display "$ICON $TEMP °C"
+display "$ICON $TEMP °C" $color
 

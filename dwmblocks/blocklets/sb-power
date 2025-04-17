@@ -2,4 +2,12 @@
 
 . sb-theme
 
-display " ⏻ "
+
+case "$BLOCK_BUTTON" in
+    1) rofi_powermenu ;;
+    2) rofi_powermenu ;;
+    3) rofi_powermenu ;;
+esac
+
+
+display "  ⏻  "

@@ -18,9 +18,6 @@
 # PERCENT="${PERCENT:-true}"
 
 
-#!/bin/sh
-
-ICON="💾"
 
 # case $BLOCK_BUTTON in
 #	1) notify-send "🧠 Memory hogs" "$(ps axch -o cmd,%mem | awk '{cmd[$1]+=$2} END {for (i in cmd) print i, cmd[i]}' | sort -nrk2 | head)" ;;
@@ -33,13 +30,20 @@ ICON="💾"
 
 
 
-
-
+ICON="💾"
 
 USED=$(free --mebi | sed -n '2{p;q}' | awk '{printf ("%2.1fG", ( $3 / 1024))}')
 USED_PR=$(free | tail -2 | head -1 | awk '{ print int($3 / $2 * 100) }')
 
 out=`printf "%s %s (%s%%)" $ICON $USED $USED_PR`
 
+if [ "$USED_PR" -ge 80 ]; then
+  color=9
+elif [ "$USED_PR" -ge 50 ]; then
+  color=4
+else 
+  color=15
+fi
+
 . sb-theme
-display "${out}"
+display "${out}" $color

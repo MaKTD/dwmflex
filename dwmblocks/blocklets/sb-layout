@@ -3,4 +3,4 @@
 . sb-theme
 layout=`xkblayout-state print "%s"`
 
-display "${layout}"
+display "${layout}" 15

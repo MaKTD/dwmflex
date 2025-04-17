@@ -26,6 +26,30 @@ notify() {
         "Battery" "$1"
 }
 
+brctl() {
+  set -- "$1"
+  cmd="$1"
+  arg="$2"
+
+
+  # brightnessctl s $arg
+  
+  if [ "$cmd" = "inc" ]; then
+    brightnessctl s 20+
+  elif [ "$cmd" = "dec" ]; then
+    cur=`brightnessctl g`
+    if [ $cur -ge 100 ]; then
+      brightnessctl s 20-
+    fi
+  fi
+}
+
+case "$BLOCK_BUTTON" in
+  1) rofi_battery ;;
+  4) brctl "inc" ;;
+  5) brctl "dec" ;;
+esac
+
 #case "$BLOCK_BUTTON" in
 #    1) notify "$(acpi -b | awk -F ': |, ' '{printf "%s\n%s\n", $2, $4}')" ;;
 #    6) terminal -e "$EDITOR" "$0" ;;
@@ -42,22 +66,28 @@ for battery in /sys/class/power_supply/BAT?*; do
     capacity="$(cat "$battery/capacity" 2>&1)"
     if [ "$capacity" -gt 90 ]; then
         status="󰁹 "
+	color=2
     elif [ "$capacity" -gt 60 ]; then
         status="󰁿 "
+	color=4
     elif [ "$capacity" -gt 40 ]; then
         status="󰁼 "
+	color=15
     elif [ "$capacity" -gt 10 ]; then
         status="󰁺 "
+	color=9
     else
         status="󱃍 "
+	color=9
     fi
 
     case "$(cat "$battery/status" 2>&1)" in
-        Full) status="⚡️ " ;;
+        Full) 
+	   status="⚡️ " 
+	;;
         Discharging)
             if [ "$capacity" -le 20 ]; then
                 status="$status"
-                color=1
             fi
             ;;
         Charging) status=" $status" ;;

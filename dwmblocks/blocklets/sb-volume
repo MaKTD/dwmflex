@@ -16,11 +16,10 @@ wpctl() {
 }
 
 case "$BLOCK_BUTTON" in
-    1) setsid --fork terminal -e pulsemixer ;;
+    1) rofi_volume ;;
     2) wpctl set-mute toggle ;;
     4) wpctl set-volume 5%+ ;;
     5) wpctl set-volume 5%- ;;
-    6) terminal -e "$EDITOR" "$0" ;;
 esac
 
 #case $BLOCK_BUTTON in
@@ -64,6 +63,6 @@ case 1 in
 	* ) echo 🔇 && exit ;;
 esac
 
-display " $icon$vol%"
+display " $icon$vol%" 6
 
 

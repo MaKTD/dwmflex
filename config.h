@@ -416,7 +416,9 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 #if COOL_AUTOSTART_PATCH
 static const char *const autostart[] = {
 	"picom", "-b", NULL,
+	"sh", "-c", "STATUSBAR=dwmblocks dwmblocks", NULL,
 	"nitrogen", "--restore", NULL,
+  "nm-applet", NULL,
 	NULL /* terminate */
 };
 #endif // COOL_AUTOSTART_PATCH
@@ -904,6 +906,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 #endif // NODMENU_PATCH
 static const char *launchercmd[] ={ "rofi", "-show", NULL };
 static const char *termcmd[]  = { "kitty", NULL };
+static const char *powermenucmd[]  = { "rofi_powermenu", NULL };
 
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
@@ -943,6 +946,7 @@ static Key keys[] = {
 	
 	{ MODKEY,                       XK_i,          incnmaster,             {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_i,          incnmaster,             {.i = -1 } },
+	{ MODKEY,                       XK_Escape,     spawn,                  {.v = powermenucmd  } },
 	
 	#if MOVESTACK_PATCH
         { MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },

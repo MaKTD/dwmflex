@@ -29,4 +29,6 @@ esac
 
 . sb-theme
 
-display "$(date "+%Y-%m-%d (%a) $icon %H:%M") "
+out=$(date "+%Y-%m-%d (%a) $icon %H:%M") 
+
+display "${out} " 15

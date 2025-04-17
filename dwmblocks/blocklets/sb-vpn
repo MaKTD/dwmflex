@@ -23,4 +23,4 @@ out=`
   }
 '
 `
-display "${out}"
+display "${out}" 6

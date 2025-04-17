@@ -37,4 +37,4 @@ fi
 #out=`printf "%s%s%s\n" "$wifiicon" "$ethericon" "$tunicon"`
 out=`printf "%s%s%s\n" "$wifiicon" "$ethericon"`
 
-display "${out}"
+display "${out}" 15

@@ -40,10 +40,15 @@ echo "${IDLE}" >> "${cpuFile}"
 
 . sb-theme
 
-# can be used to colored
-#if [[ "${DIFF_USAGE}" -gt 0 ]] && [[ "${DIFF_USAGE}" -gt "${URGENT_VALUE}" ]]; then
-#  exit 33
-#fi
+if [[ "${USAGE}" = "?" ]]; then
+	color=15
+elif [[ "${USAGE}" -gt 25 ]];  then
+	color=4
+elif [[ "${USAGE}" -gt 80 ]];  then
+	color=9
+else
+	color=15
+fi
 
 out=`printf "%s %s%%" $ICON $USAGE`
-display "${out}"
+display "${out}" $color
